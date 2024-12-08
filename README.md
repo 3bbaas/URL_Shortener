@@ -21,8 +21,8 @@ interface for quick URL shortening.
 
 ## Screenshots
 
-| Light theme                                                                   |                                 Dark Theme                                  |
-|:------------------------------------------------------------------------------|:---------------------------------------------------------------------------:|
+|                                  Light theme                                  |                                 Dark Theme                                  |
+|:-----------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
 | <img src="demo/light-theme.png" title="Light theme" width="100%" crossorigin> | <img src="demo/dark-theme.png" title="Dark Theme" width="100%" crossorigin> |
 
 ## Prerequisites
@@ -59,16 +59,16 @@ interface for quick URL shortening.
 
 5. **Set up environment variables**:
 
-   - Create a .env file in the root directory.
-   - Add the following variables:
-     ```env
-     SECRET_KEY=your_django_secret_key
-     BITLY_API_KEY=your_bitly_api_key
-     CUTLLY_API_KEY=your_cuttly_api_key```
+    - Create a .env file in the root directory.
+    - Add the following variables:
+      ```env
+      SECRET_KEY=your_django_secret_key
+      BITLY_API_KEY=your_bitly_api_key
+      CUTLLY_API_KEY=your_cuttly_api_key```
 
-    >    [!NOTE]  
-    >    If you don't have API keys for Bitly or Cutt.ly, you can leave them empty or remove related options from the
-         application.
+   > [!NOTE]  
+   > If you don't have API keys for Bitly or Cutt.ly, you can leave them empty or remove related options from the
+   application.
 
 6. **Apply migrations**:
     ```bash
