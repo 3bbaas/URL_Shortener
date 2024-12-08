@@ -1,41 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --background-color: #f4f4f9;
+            --text-color: #333;
+            --primary-color: #007BFF;
+            --secondary-color: #0056b3;
+            --navbar-background: #fff;
+            --navbar-text: #333;
+            --footer-background: #333;
+            --footer-text: #fff;
+            --input-background: #fff;
+            --input-border: #ccc;
+            --button-background: #007BFF;
+            --button-hover: #0056b3;
+        }
+
+        [data-theme="dark"] {
+            --background-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #1E90FF;
+            --secondary-color: #1c97ff;
+            --navbar-background: #1f1f1f;
+            --navbar-text: #e0e0e0;
+            --footer-background: #222;
+            --footer-text: #e0e0e0;
+            --input-background: #2c2c2c;
+            --input-border: #555;
+            --button-background: #1E90FF;
+            --button-hover: #1c97ff;
+        }
+
+        /* Ensuring the body takes the full viewport height and uses flexbox */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            background: #f4f4f9;
+            background: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--navbar-background);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .brand {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--navbar-text);
+            text-decoration: none;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .nav-links a {
+            color: var(--navbar-text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Hamburger Menu (for mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--navbar-text);
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--navbar-background);
+                flex-direction: column;
+                align-items: center;
+                display: none;
+            }
+
+            .navbar .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* Main Container Styles */
+        .main-content-wrapper {
+            display: flex;
+            flex: 1;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: #333;
+            padding: 20px;
         }
 
         .container {
             text-align: center;
+            width: 100%;
             max-width: 600px;
-            background: #fff;
-            padding: 20px;
+            background: var(--input-background);
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin: 50px auto;
-
         }
 
         h1 {
-            color: #007BFF;
+            color: var(--primary-color);
             margin-bottom: 20px;
         }
 
         p {
             margin: 10px 0 20px;
-            color: #666;
+            color: var(--text-color);
         }
 
         form {
@@ -47,55 +208,58 @@
         input[type="url"] {
             padding: 10px;
             font-size: 16px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
+            background: var(--input-background);
+            color: var(--text-color);
         }
 
         button {
-            background: #007BFF;
+            background: var(--button-background);
             color: #fff;
-            width: 15vw;
             padding: 10px;
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         button:hover {
-            background: #0056b3;
+            background: var(--button-hover);
         }
 
         select {
             padding: 10px;
             font-size: 16px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
-            background: #007BFF;
+            background: var(--button-background);
             color: white;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         select:hover {
-            background-color: #0056b3;
+            background-color: var(--button-hover);
         }
 
-        .shortened-link {
+        .shortened-link, #result-section a {
             margin-top: 20px;
             font-size: 16px;
-            color: #007BFF;
+            color: var(--primary-color);
             cursor: pointer;
             text-decoration: underline;
             position: relative;
         }
 
-        .shortened-link:hover {
-            color: #0056b3;
+        .shortened-link:hover, #result-section a:hover {
+            color: var(--secondary-color);
         }
 
         .tooltip {
             visibility: hidden;
-            background-color: #1c97ff;
+            background-color: var(--secondary-color);
             color: white;
             text-align: center;
             border-radius: 5px;
@@ -117,18 +281,15 @@
         }
 
         footer {
-            background: #333;
-            color: white;
+            background: var(--footer-background);
+            color: var(--footer-text);
             text-align: center;
             padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
             font-size: 14px;
         }
 
         footer a {
-            color: #1E90FF;
+            color: var(--primary-color);
             text-decoration: none;
             margin: 0 5px;
         }
@@ -137,55 +298,99 @@
             text-decoration: underline;
         }
 
-        #result-section {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #007BFF;
-            cursor: pointer;
-            text-decoration: underline;
-            position: relative;
+        /* Additional Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            button, select, input[type="url"] {
+                font-size: 15px;
+                padding: 9px;
+            }
         }
 
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            button, select, input[type="url"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>URL Shortener</h1>
-    <p>Enter a long URL to shorten it quickly.</p>
+<nav class="navbar">
+    <a href="#" class="brand">URL Shortener</a>
+    <div class="nav-links" id="navLinks">
+        <a href="#">Home</a>
+        <a href="https://www.linkedin.com/in/3bbaas/" target="_blank">About</a>
+    </div>
+    <div class="toggle-container">
+        <label for="theme-toggle">🌙</label>
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+        <label for="theme-toggle">☀️</label>
+    </div>
+    <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</nav>
 
-    <form method="POST">
-        {% csrf_token %}
-        <input type="url" name="long_url" placeholder="Enter URL here" required autocomplete="off">
-        <div class="mohamed">
-            <select name="service">
-                <option value="tinyurl">tinyURL</option>
-                <option value="bitly">bitly</option>
-                <option value="chilpit">chilpit</option>
-                <option value="clckru">clckru</option>
-                <option value="cuttly">cuttly</option>
-                <option value="dagd">dagd</option>
-                <option value="isgd">isgd</option>
-            </select>
-            <button type="submit">Shorten URL</button>
-        </div>
-    </form>
+<!-- Wrapper to center content vertically -->
+<div class="main-content-wrapper">
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <p>Enter a long URL to shorten it quickly.</p>
 
-    {% if shortened_url %}
-        <div id="result-section">
-            <p>Shortened URL:</p>
-            <a href=""
-               class="shortened-link"
-               onclick="copyToClipboard('{{ shortened_url }}', this)">
-                {{ shortened_url }}
-                <span class="tooltip">Copied to clipboard!</span>
-            </a>
-        </div>
-    {% endif %}
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="url" name="long_url" placeholder="Enter URL here" required autocomplete="off">
+            <div class="mohamed"
+                 style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <select name="service">
+                    <option value="tinyurl">tinyURL</option>
+                    <option value="bitly">bitly</option>
+                    <option value="chilpit">chilpit</option>
+                    <option value="clckru">clckru</option>
+                    <option value="cuttly">cuttly</option>
+                    <option value="dagd">dagd</option>
+                    <option value="isgd">isgd</option>
+                </select>
+                <button type="submit">Shorten URL</button>
+            </div>
+        </form>
 
+        {% if shortened_url %}
+            <div id="result-section">
+                <p>Shortened URL:</p>
+                <a href="" class="shortened-link" onclick="copyToClipboard('{{ shortened_url }}', this)" target="_blank">
+                    {{ shortened_url }}
+                    <span class="tooltip">Copied to clipboard!</span>
+                </a>
+            </div>
+        {% endif %}
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+    </div>
 </div>
+
 <footer>
     &copy; 2024 @3bbas |
     <a href="https://www.linkedin.com/in/3bbaas/" target="_blank">LinkedIn</a> |
@@ -211,10 +416,37 @@
             setTimeout(() => {
                 const resultSection = document.getElementById("result-section");
                 resultSection.innerHTML = "";
-            }, 6000);
+            }, 30000); // Changed to 30 seconds (30000 ms)
         }
     });
 
+    // Theme Toggle Script
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    if (currentTheme === 'dark') {
+        themeToggle.checked = true;
+    }
+
+    themeToggle.addEventListener('change', function () {
+        if (this.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // Hamburger Menu Script
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
 </script>
 </body>
 </html>
