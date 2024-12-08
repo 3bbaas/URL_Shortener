@@ -73,7 +73,8 @@ interface for quick URL shortening.
 6. **Apply migrations**:
     ```bash
     python manage.py migrate```
-   7. **Run the development server**:
+
+7. **Run the development server**:
     ```bash
     python manage.py runserver```
 
