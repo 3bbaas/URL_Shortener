@@ -61,7 +61,7 @@ interface for quick URL shortening.
 
     - Create a .env file in the root directory.
     - Add the following variables:
-      ```env
+      ```dotenv
       SECRET_KEY=your_django_secret_key
       BITLY_API_KEY=your_bitly_api_key
       CUTLLY_API_KEY=your_cuttly_api_key```
