@@ -20,3 +20,5 @@ load_dotenv(dotenv_path=BASE_DIR / '.env')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'url_shortener.settings')
 
 application = get_wsgi_application()
+
+app = application
