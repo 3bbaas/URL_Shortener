@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'url_shortener/fav-icon.ico' %}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -36,7 +38,6 @@
             --button-hover: #1c97ff;
         }
 
-        /* Ensuring the body takes the full viewport height and uses flexbox */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -47,7 +48,6 @@
             flex-direction: column;
         }
 
-        /* Navbar Styles */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -61,10 +61,31 @@
         }
 
         .navbar .brand {
-            font-size: 1.2em;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             color: var(--navbar-text);
             text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .navbar .brand .logo {
+            height: 30px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .brand .logo {
+                height: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .brand .logo {
+                height: 20px;
+            }
         }
 
         .navbar .nav-links {
@@ -133,7 +154,6 @@
             transform: translateX(20px);
         }
 
-        /* Hamburger Menu (for mobile) */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -170,7 +190,6 @@
             }
         }
 
-        /* Main Container Styles */
         .main-content-wrapper {
             display: flex;
             flex: 1;
@@ -298,7 +317,6 @@
             text-decoration: underline;
         }
 
-        /* Additional Responsive Adjustments */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -332,7 +350,10 @@
 </head>
 <body>
 <nav class="navbar">
-    <a href="#" class="brand">URL Shortener</a>
+    <a href="#" class="brand">
+        <img src="{% static 'url_shortener/logo.png' %}" alt="Logo" class="logo">
+        URL Shortener
+    </a>
     <div class="nav-links" id="navLinks">
         <a href="#">Home</a>
         <a href="https://www.linkedin.com/in/3bbaas/" target="_blank">About</a>
@@ -352,7 +373,6 @@
     </div>
 </nav>
 
-<!-- Wrapper to center content vertically -->
 <div class="main-content-wrapper">
     <div class="container">
         <h1>URL Shortener</h1>
@@ -379,7 +399,8 @@
         {% if shortened_url %}
             <div id="result-section">
                 <p>Shortened URL:</p>
-                <a href="" class="shortened-link" onclick="copyToClipboard('{{ shortened_url }}', this)" target="_blank">
+                <a href="" class="shortened-link" onclick="copyToClipboard('{{ shortened_url }}', this)"
+                   target="_blank">
                     {{ shortened_url }}
                     <span class="tooltip">Copied to clipboard!</span>
                 </a>
@@ -416,11 +437,10 @@
             setTimeout(() => {
                 const resultSection = document.getElementById("result-section");
                 resultSection.innerHTML = "";
-            }, 30000); // Changed to 30 seconds (30000 ms)
+            }, 30000);
         }
     });
 
-    // Theme Toggle Script
     const themeToggle = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
 
@@ -440,7 +460,6 @@
         }
     });
 
-    // Hamburger Menu Script
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
 
