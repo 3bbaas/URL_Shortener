@@ -71,10 +71,9 @@ interface for quick URL shortening.
       BITLY_API_KEY=your_bitly_api_key
       CUTLLY_API_KEY=your_cuttly_api_key
       ```
-
-   > [!NOTE]  
-   > If you don't have API keys for Bitly or Cutt.ly, you can leave them empty or remove related options from the
-   application.
+> [!NOTE]  
+> If you don't have API keys for Bitly or Cutt.ly, you can leave them empty or remove related options from the
+application.
 
 6. **Apply migrations**:
     ```bash
