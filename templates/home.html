@@ -399,8 +399,7 @@
         {% if shortened_url %}
             <div id="result-section">
                 <p>Shortened URL:</p>
-                <a href="" class="shortened-link" onclick="copyToClipboard('{{ shortened_url }}', this)"
-                   target="_blank">
+                <a href="" class="shortened-link" onclick="copyToClipboard('{{ shortened_url }}', this)">
                     {{ shortened_url }}
                     <span class="tooltip">Copied to clipboard!</span>
                 </a>

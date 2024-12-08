@@ -26,10 +26,8 @@ load_dotenv(dotenv_path=BASE_DIR / '.env')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1', 't']
 DEBUG = True
-# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
-# ALLOWED_HOSTS = ['*']
+
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
@@ -42,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'url_shortener'
+    'url_shortener',
 ]
 
 MIDDLEWARE = [
@@ -123,10 +121,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -135,8 +131,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Additional settings
 BITLY_API_KEY = os.getenv('BITLY_API_KEY')
 CUTLLY_API_KEY = os.getenv('CUTLLY_API_KEY')
-
-
-print(f"SECRET_KEY: {SECRET_KEY}")
-print(f"BITLY_API_KEY: {BITLY_API_KEY}")
-print(f"CUTLLY_API_KEY: {CUTLLY_API_KEY}")

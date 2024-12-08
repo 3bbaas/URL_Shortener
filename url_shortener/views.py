@@ -6,25 +6,22 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.shortcuts import render
 
-from .forms import get_url
-
 BITLY_API_KEY = os.environ.get("BITLY_API_KEY")
 CUTLLY_API_KEY = os.environ.get("CUTLLY_API_KEY")
 
 
 def generate_url(request):
-    form = get_url(request.POST or None)
     shortened_url = None
     error_message = None
 
     shortened_url_patterns = [
         r'^https?://(www\.)?tinyurl\.com/.*',
         r'^https?://(www\.)?bit\.ly/.*',
-        r'^https?://(www\.)?chilpit\.ly/.*',
-        r'^https?://(www\.)?clckru\.ly/.*',
-        r'^https?://(www\.)?cuttly\.ly/.*',
-        r'^https?://(www\.)?dagd\.ly/.*',
-        r'^https?://(www\.)?isgd\.ly/.*',
+        r'^https?://(www\.)?chilp\.it/.*',
+        r'^https?://(www\.)?clck\.ru/.*',
+        r'^https?://(www\.)?cutt\.ly/.*',
+        r'^https?://(www\.)?da\.gd/.*',
+        r'^https?://(www\.)?is\.gd/.*',
     ]
 
     if request.method == "POST":
@@ -38,12 +35,12 @@ def generate_url(request):
 
                 for pattern in shortened_url_patterns:
                     if re.match(pattern, long_url):
-                        error_message = f"The provided URL is already shortened with {pattern}."
+                        error_message = "The provided URL is already shortened."
                         return render(request, 'home.html', {'error_message': error_message})
 
             except ValidationError:
                 error_message = "Invalid URL. Please enter a valid URL."
-                return render(request, 'home.html', {'form': form, 'error_message': error_message})
+                return render(request, 'home.html', {'error_message': error_message})
 
             try:
                 if site == "tinyurl":
@@ -67,7 +64,7 @@ def generate_url(request):
                 elif site == "isgd":
                     s = pyshorteners.Shortener()
                     shortened_url = s.isgd.short(long_url)
-            except pyshorteners.exceptions.ShorteningErrorException as e:
+            except pyshorteners.exceptions.ShorteningErrorException:
                 error_message = "Failed to shorten the URL. Please try again later."
 
-    return render(request, 'home.html', {'form': form, 'shortened_url': shortened_url, 'error_message': error_message})
+    return render(request, 'home.html', {'shortened_url': shortened_url, 'error_message': error_message})
