@@ -378,7 +378,6 @@
     <div class="container">
         <h1>URL Shortener</h1>
         <p>Enter a long URL to shorten it quickly.</p>
-
         <form method="POST">
             {% csrf_token %}
             <input type="url" name="long_url" placeholder="Enter URL here" required autocomplete="off">
