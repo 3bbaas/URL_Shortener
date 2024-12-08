@@ -1,3 +1,4 @@
+import os
 import re
 
 import pyshorteners
@@ -6,6 +7,9 @@ from django.core.validators import URLValidator
 from django.shortcuts import render
 
 from .forms import get_url
+
+BITLY_API_KEY = os.environ.get("BITLY_API_KEY")
+CUTLLY_API_KEY = os.environ.get("CUTLLY_API_KEY")
 
 
 def generate_url(request):
@@ -46,7 +50,7 @@ def generate_url(request):
                     s = pyshorteners.Shortener()
                     shortened_url = s.tinyurl.short(long_url)
                 elif site == "bitly":
-                    s = pyshorteners.Shortener(api_key='de36c105ae76331609a19ff1ce2d391012d5710a')
+                    s = pyshorteners.Shortener(api_key=BITLY_API_KEY)
                     shortened_url = s.bitly.short(long_url)
                 elif site == "chilpit":
                     s = pyshorteners.Shortener()
@@ -55,7 +59,7 @@ def generate_url(request):
                     s = pyshorteners.Shortener()
                     shortened_url = s.clckru.short(long_url)
                 elif site == "cuttly":
-                    s = pyshorteners.Shortener(api_key='3745d515279a2c9396a5144c99c0017ed81b9')
+                    s = pyshorteners.Shortener(api_key=CUTLLY_API_KEY)
                     shortened_url = s.cuttly.short(long_url)
                 elif site == "dagd":
                     s = pyshorteners.Shortener()
